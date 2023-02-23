@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "produits",
+  "info": {
+    "singularName": "produit",
+    "pluralName": "produits",
+    "displayName": "Produit",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titre": {
+      "type": "string",
+      "required": true,
+      "default": "Titre par défaut"
+    },
+    "categories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::categorie.categorie",
+      "mappedBy": "produit"
+    },
+    "product_image_url": {
+      "type": "string",
+      "required": true
+    },
+    "short_description": {
+      "type": "string",
+      "required": true,
+      "default": "Votre contrat au meilleur prix !"
+    },
+    "description": {
+      "type": "richtext"
+    }
+  }
+}
