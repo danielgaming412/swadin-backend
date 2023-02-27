@@ -34,6 +34,9 @@
     },
     "description": {
       "type": "richtext"
+    },
+    "id_form": {
+      "type": "string"
     }
   }
 }
