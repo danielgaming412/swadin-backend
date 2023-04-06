@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prospects",
+  "info": {
+    "singularName": "prospect",
+    "pluralName": "prospects",
+    "displayName": "prospect",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "primes_ch": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::prime-ch.prime-ch"
+    },
+    "sms_code": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::sms-code.sms-code",
+      "mappedBy": "prospect"
+    }
+  }
+}

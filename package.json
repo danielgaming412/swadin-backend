@@ -7,21 +7,29 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "test": "jest --forceExit --detectOpenHandles"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "sqlite3": "^5.1.6",
+    "supertest": "^6.3.3"
+  },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
-    "@strapi/plugin-i18n": "4.6.0",
-    "@strapi/plugin-users-permissions": "4.6.0",
-    "@strapi/strapi": "4.6.0",
+    "@strapi/plugin-i18n": "4.8.2",
+    "@strapi/plugin-users-permissions": "4.8.2",
+    "@strapi/strapi": "4.8.2",
+    "async": "^3.2.4",
     "better-sqlite3": "7.4.6",
+    "mod-aspsms": "^2.0.1",
     "pg": "^8.9.0",
     "pg-connection-string": "^2.5.0",
+    "request": "^2.88.2",
     "strapi-plugin-import-export-entries": "^1.18.0"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "Daniel Gaming"
   },
   "strapi": {
     "uuid": "6dab876e-9faa-4c40-b853-8f3c67d6eb6c"
@@ -29,6 +37,14 @@
   "engines": {
     "node": ">=14.19.1 <=18.x.x",
     "npm": ">=6.0.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      ".tmp",
+      ".cache"
+    ],
+    "testEnvironment": "node"
   },
   "license": "MIT"
 }

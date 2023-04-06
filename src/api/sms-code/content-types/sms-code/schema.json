@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "sms_codes",
+  "info": {
+    "singularName": "sms-code",
+    "pluralName": "sms-codes",
+    "displayName": "SMSCode",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "validation_code": {
+      "type": "integer"
+    },
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "expires_at": {
+      "type": "datetime"
+    },
+    "prospect": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::prospect.prospect",
+      "inversedBy": "sms_code"
+    }
+  }
+}

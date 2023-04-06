@@ -24,7 +24,7 @@
       },
       "type": "string"
     },
-    "classeAge": {
+    "region": {
       "pluginOptions": {
         "i18n": {
           "localized": false
@@ -32,7 +32,7 @@
       },
       "type": "string"
     },
-    "regionPrime": {
+    "accident": {
       "pluginOptions": {
         "i18n": {
           "localized": false
@@ -40,66 +40,50 @@
       },
       "type": "string"
     },
-    "couvertureAccident": {
+    "assurance": {
       "pluginOptions": {
         "i18n": {
-          "localized": false
+          "localized": true
         }
       },
       "type": "string"
     },
-    "identifiantTarif": {
+    "modele_de_base": {
       "pluginOptions": {
         "i18n": {
-          "localized": false
+          "localized": true
         }
       },
       "type": "string"
     },
-    "typeTarif": {
+    "tranche_dage": {
       "pluginOptions": {
         "i18n": {
-          "localized": false
+          "localized": true
         }
       },
       "type": "string"
     },
-    "sousGroupeAge": {
+    "pays": {
       "pluginOptions": {
         "i18n": {
-          "localized": false
+          "localized": true
         }
       },
       "type": "string"
     },
-    "niveauFranchise": {
+    "annee": {
       "pluginOptions": {
         "i18n": {
-          "localized": false
+          "localized": true
         }
       },
-      "type": "string"
+      "type": "integer"
     },
-    "montantFranchise": {
+    "franchise": {
       "pluginOptions": {
         "i18n": {
-          "localized": false
-        }
-      },
-      "type": "string"
-    },
-    "nomTarif": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "type": "string"
-    },
-    "assureur": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
+          "localized": true
         }
       },
       "type": "integer"
@@ -107,26 +91,22 @@
     "prime": {
       "pluginOptions": {
         "i18n": {
-          "localized": false
+          "localized": true
         }
       },
-      "type": "decimal"
+      "type": "string"
     },
-    "isTarifDeBase": {
+    "type_modele_de_base": {
       "pluginOptions": {
         "i18n": {
-          "localized": false
+          "localized": true
         }
       },
-      "type": "integer"
-    },
-    "isFranchiseOrdinaire": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "type": "integer"
+      "type": "enumeration",
+      "enum": [
+        "Standard",
+        "Alternatif"
+      ]
     }
   }
 }
