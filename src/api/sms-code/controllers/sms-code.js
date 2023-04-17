@@ -12,51 +12,51 @@ module.exports = {
         const code = Math.floor(Math.random() * 9000 + 1000);
         const phone = ctx.request.body.phone;
         if (!phone) {
-          return ctx.badRequest('Numéro de téléphone requis');
+            return ctx.badRequest('Numéro de téléphone requis');
         }
-        console.log("phonecontroller", phone)
+        // console.log("phonecontroller", phone)
         // Calculate the expiration time (e.g., 15 minutes from now)
         const expiresIn = 15 * 60 * 1000; // 15 minutes in milliseconds
         const expiresAt = new Date(Date.now() + expiresIn);
-      
+
         // Save the code and its expiration time in your database
         const verificationData = {
             phone,
             validation_code: code,
             expires_at: expiresAt,
         };
-      
+
         const existingVerification = await strapi.entityService.findMany("api::sms-code.sms-code",
-          {
-            filters: { phone: phone },
-            limit: 1,
-            populate: { propspect: true },
-          });
-      
-        console.log(existingVerification)
-      
+            {
+                filters: { phone: phone },
+                limit: 1,
+                populate: { propspect: true },
+            });
+
+        //  console.log(existingVerification)
+
         if (existingVerification && existingVerification.length > 0) {
-          // Update the existing record with the new code and expiration time
-          const entity = existingVerification[0]
-          console.log("entity", entity);
-          console.log(verificationData)
-          await strapi.entityService.update("api::sms-code.sms-code", entity.id, {data: verificationData});
-          console.log("updated")
+            // Update the existing record with the new code and expiration time
+            const entity = existingVerification[0]
+            //   console.log("entity", entity);
+            // console.log(verificationData)
+            await strapi.entityService.update("api::sms-code.sms-code", entity.id, { data: verificationData });
+            //  console.log("updated")
         } else {
-          // Create a new record if it doesn't exist with the verificationData
-          await strapi.service("api::sms-code.sms-code").create(verificationData);
-          console.log("created");
+            // Create a new record if it doesn't exist with the verificationData
+            await strapi.service("api::sms-code.sms-code").create(verificationData);
+            // console.log("created");
         }
-      
+
         if (!phone || !code) {
-          return ctx.badRequest('Phone number and verification code are required');
+            return ctx.badRequest('Phone number and verification code are required');
         }
-      
+
         // Send the validation code
         strapi.service("api::sms-code.sms").sendValidationCode(phone, code);
-        return ctx.send({ message: 'Verification code sent successfully' });
-      },
-      
+        return ctx.send({ message: `${code} available for 15min only` });
+    },
+
 
     async get(ctx) {
         return await strapi
@@ -73,19 +73,19 @@ module.exports = {
             limit: 1,
             populate: { prospect: true },
         });
-    
+
         if (!existingVerification || existingVerification.length === 0) {
             return ctx.badRequest('Phone number not found');
         }
-    
+
         const storedVerification = existingVerification[0];
         const isCodeCorrect = storedVerification.validation_code === parseInt(validation_code);
         const isCodeExpired = new Date(storedVerification.expires_at) < new Date();
 
-        console.log("storedVerification", storedVerification);
-        console.log("code from body", ctx.request.body);
-        console.log("isCodeExpired", isCodeExpired);
-    
+        // console.log("storedVerification", storedVerification);
+        // console.log("code from body", ctx.request.body);
+        // console.log("isCodeExpired", isCodeExpired);
+
         // Compare the submitted code with the stored code and check if it's expired
         if (isCodeCorrect && !isCodeExpired) {
             // Mark the user as verified in your database
