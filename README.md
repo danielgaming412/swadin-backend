@@ -39,6 +39,13 @@ yarn build
 ```
 git add .
 git commit -m "Changes to my-project noted"
+```
+Login to Heroku before pushing
+```
+heroku login
+```
+Push to Heroku
+```
 git push heroku HEAD:main
 heroku open
 ```
