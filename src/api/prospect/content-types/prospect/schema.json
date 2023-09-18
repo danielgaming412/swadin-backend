@@ -18,16 +18,28 @@
     "phone": {
       "type": "string"
     },
-    "primes_ch": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::prime-ch.prime-ch"
-    },
     "sms_code": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::sms-code.sms-code",
       "mappedBy": "prospect"
+    },
+    "form_info": {
+      "type": "json",
+      "required": false
+    },
+    "prime_actuelle": {
+      "type": "json"
+    },
+    "family_name": {
+      "type": "string"
+    },
+    "family_members_count": {
+      "type": "integer"
+    },
+    "score": {
+      "type": "integer",
+      "default": 0
     }
   }
 }

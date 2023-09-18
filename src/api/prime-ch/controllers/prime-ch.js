@@ -7,7 +7,6 @@
 const { createCoreController } = require('@strapi/strapi').factories;
 
 const calculateBestOptions = (primes, yearOfBirth, canton, regionPrime, montantFranchise) => {
-    console.log(primes.length)
     const filteredPrimes = primes.filter(prime => {
         // Filter by classeAge
         let classeAge;
@@ -19,14 +18,14 @@ const calculateBestOptions = (primes, yearOfBirth, canton, regionPrime, montantF
             classeAge = "AKL-ERW";
         }
         if (prime.attributes.classeAge !== classeAge) {
-           // console.log("age")
+            // console.log("age")
             return false;
         }
         //console.log(classeAge)
 
         // Filter by canton
         if (canton && prime.attributes.canton !== canton) {
-           // console.log("canton")
+            // console.log("canton")
             return false;
         }
 

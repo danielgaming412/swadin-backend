@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "form_analytics",
+  "info": {
+    "singularName": "form-analytic",
+    "pluralName": "form-analytics",
+    "displayName": "FormAnalytic",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "step_name": {
+      "type": "string"
+    },
+    "step_number": {
+      "type": "integer"
+    }
+  }
+}

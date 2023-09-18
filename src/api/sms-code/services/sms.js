@@ -8,11 +8,11 @@ module.exports = {
             "UserName": process.env.ASPSMS_USER,
             "Password": process.env.ASPSMS_PASSWORD,
             "Originator": process.env.ASPSMS_ORIGINATOR,
-            // Optional:
+            // Optional: 
             "logger": console.log,
         };
         const sms = require('mod-aspsms')(config);
         const phoneNumbers = [phone];
-        sms.send(phoneNumbers, message);
+        sms.send(phoneNumbers, message); 
     }
 };

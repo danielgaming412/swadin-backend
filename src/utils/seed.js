@@ -40,7 +40,7 @@ const { faker } = require("@faker-js/faker");
 
 async function bulkPublish() {
   const items = await strapi.entityService.findMany("api::prime-ch.prime-ch", { publishedAt: null });
- 
+
   const updateItem = async (item) => {
     try {
       console.log("publishing item ", `${items.indexOf(item)}/${items.length}`);
@@ -95,6 +95,7 @@ async function seedArticlesCollection() {
     });
   }
 
+
   // for (let i = 0; i < numberOfRecordsToCreate; i++) {
   //   // 3
   //   await strapi.api.categorie.services.categorie.create({
@@ -105,4 +106,25 @@ async function seedArticlesCollection() {
   // }
 }
 
-module.exports = { bulkPublish, deleteBulk, seedArticlesCollection };
+async function seedFormAnalyticCollection() {
+  const numberOfRecordsToCreate = 100;
+  const STEPSNAME = {
+    foyer_step: "foyer_step",
+    modele_de_base_step: "modele_de_base_step",
+    information_assurance_actuelle_step: "information_assurance_actuelle_step",
+    information_assurance_de_base_step: "information_assurance_de_base_step",
+    prestation_complémentaire_step: "prestation_complémentaire_step",
+  };
+
+  for (let i = 0; i < numberOfRecordsToCreate; i++) {
+    await strapi.entityService.create("api::form-analytic.form-analytic", {
+      data: {
+        step_number: faker.datatype.number({ min: 1, max: 5 }),
+        step_name: faker.helpers.enumValue(STEPSNAME),
+        publishedAt: faker.date.past(),
+      },
+    });
+  }
+}
+
+module.exports = { bulkPublish, deleteBulk, seedArticlesCollection, seedFormAnalyticCollection };

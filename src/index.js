@@ -1,6 +1,6 @@
 'use strict';
 
-const { bulkPublish, deleteBulk, seedArticlesCollection } = require("./utils/seed");
+const { bulkPublish, deleteBulk, seedArticlesCollection, seedFormAnalyticCollection } = require("./utils/seed");
 
 module.exports = {
   /**
@@ -9,7 +9,7 @@ module.exports = {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/*{ strapi }*/) {},
+  register(/*{ strapi }*/) { },
 
   /**
    * An asynchronous bootstrap function that runs before
@@ -18,9 +18,9 @@ module.exports = {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-   async bootstrap() {
-   // await deleteBulk();
-   // await seedArticlesCollection();
-   //await bulkPublish(100);
+  async bootstrap() {
+    // await deleteBulk();
+    //await seedFormAnalyticCollection();
+    //await bulkPublish(100);
   },
 };
