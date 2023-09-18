@@ -35,7 +35,7 @@ yarn build
 ## ⚙️ Deployment
 
 ### Heroku update
-
+ 
 ```
 git add .
 git commit -m "Changes to my-project noted"
