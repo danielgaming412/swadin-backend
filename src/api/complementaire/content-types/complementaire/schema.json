@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "complementaires",
+  "info": {
+    "singularName": "complementaire",
+    "pluralName": "complementaires",
+    "displayName": "complementaire",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "age_group": {
+      "type": "enumeration",
+      "enum": [
+        "enfant",
+        "jeune",
+        "adulte"
+      ],
+      "default": "adulte"
+    },
+    "pack": {
+      "type": "enumeration",
+      "enum": [
+        "pack 1",
+        "pack 2",
+        "pack 3"
+      ],
+      "default": "pack 1"
+    },
+    "price": {
+      "type": "string"
+    }
+  }
+}

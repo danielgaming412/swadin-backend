@@ -21,6 +21,6 @@ module.exports = {
   async bootstrap() {
     // await deleteBulk();
     //await seedFormAnalyticCollection();
-    //await bulkPublish(100);
+   //await bulkPublish(100);
   },
 };
