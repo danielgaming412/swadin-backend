@@ -39,12 +39,12 @@ const { faker } = require("@faker-js/faker");
 // }
 
 async function bulkPublish() {
-  const items = await strapi.entityService.findMany("api::complementaire.complementaire", { publishedAt: null });
+  const items = await strapi.entityService.findMany("api::prime-ch.prime-ch", { publishedAt: null });
 
   const updateItem = async (item) => {
     try {
       console.log("publishing item ", `${items.indexOf(item)}/${items.length}`);
-      await strapi.entityService.update("api::complementaire.complementaire", item.id, {
+      await strapi.entityService.update("api::prime-ch.prime-ch", item.id, {
         data: {
           publishedAt: new Date().toISOString()
         },

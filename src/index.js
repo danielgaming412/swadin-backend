@@ -19,7 +19,7 @@ module.exports = {
    * run jobs, or perform some special logic.
    */
   async bootstrap() {
-    // await deleteBulk();
+    //await deleteBulk();
     //await seedFormAnalyticCollection();
    //await bulkPublish(100);
   },
