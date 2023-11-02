@@ -63,18 +63,24 @@ async function bulkPublish() {
   }
 }
 
-
-
 async function deleteBulk() {
-  const items = await strapi.entityService.findMany("api::prime-ch.prime-ch", { published_at: null });
-  try {
+  console.log("deleting items")
+  const items = await strapi.db.query("api::primes-ch-2024.primes-ch-2024").findMany(
+    {
+      where: {
+        type_modele_de_base: {
+          $null: true,
+        },
+      }, 
+    }); 
+  try { 
     const promises = items.map(item => {
       console.log("deleting item ", item.id);
-      return strapi.entityService.delete("api::prime-ch.prime-ch", item.id);
+      return strapi.entityService.delete("api::primes-ch-2024.primes-ch-2024", item.id);
     });
     await Promise.all(promises);
   } catch (err) {
-    console.error("An error occurred while bulk publishing:", err);
+    console.error("An error occurred while bulk deleting:", err);
   }
 }
 
