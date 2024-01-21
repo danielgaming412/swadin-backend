@@ -4,7 +4,8 @@
   "info": {
     "singularName": "assurance",
     "pluralName": "assurances",
-    "displayName": "Assurance"
+    "displayName": "Assurance",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -39,7 +40,7 @@
       "type": "string"
     },
     "avis": {
-      "type": "string"
+      "type": "text"
     }
   }
 }

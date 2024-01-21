@@ -68,7 +68,7 @@
       "type": "string"
     },
     "summary": {
-      "type": "string"
+      "type": "text"
     },
     "offer_number": {
       "type": "integer",
