@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "assurances",
+  "info": {
+    "singularName": "assurance",
+    "pluralName": "assurances",
+    "displayName": "Assurance"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nom": {
+      "type": "string"
+    },
+    "prise_en_charge": {
+      "type": "string"
+    },
+    "delais": {
+      "type": "string"
+    },
+    "reserves": {
+      "type": "string"
+    },
+    "nombre_assures": {
+      "type": "string"
+    },
+    "rabais": {
+      "type": "string"
+    },
+    "frais": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    },
+    "etoile": {
+      "type": "string"
+    },
+    "avis": {
+      "type": "string"
+    }
+  }
+}

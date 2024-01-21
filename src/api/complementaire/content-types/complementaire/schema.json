@@ -35,6 +35,45 @@
     },
     "price": {
       "type": "string"
+    },
+    "hospitalisation": {
+      "type": "string",
+      "required": false
+    },
+    "med_limites_hors_listes": {
+      "type": "string"
+    },
+    "lunettes_et_lentilles_de_contact": {
+      "type": "string"
+    },
+    "prevention": {
+      "type": "string"
+    },
+    "med_alternatives": {
+      "type": "string"
+    },
+    "promo_sante_fitness": {
+      "type": "string"
+    },
+    "protection_etranger": {
+      "type": "string"
+    },
+    "captital_hospitalisation": {
+      "type": "string"
+    },
+    "traitement_dentaire": {
+      "type": "string"
+    },
+    "offer_name": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "offer_number": {
+      "type": "integer",
+      "required": false,
+      "unique": false
     }
   }
 }

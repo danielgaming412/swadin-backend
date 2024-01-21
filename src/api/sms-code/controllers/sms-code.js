@@ -66,7 +66,7 @@ module.exports = {
             },
         });
         return ctx.send({ message: `${code} available for 15min only`, prospect: prospect.id });
-    },
+    }, 
 
     async get(ctx) {
         return await strapi
