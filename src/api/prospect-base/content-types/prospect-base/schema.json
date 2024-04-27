@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prospect_bases",
+  "info": {
+    "singularName": "prospect-base",
+    "pluralName": "prospect-bases",
+    "displayName": "prospectBase",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "prospect": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::prospect.prospect"
+    },
+    "primes_ch_2024": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::primes-ch-2024.primes-ch-2024"
+    },
+    "souhait": {
+      "type": "string"
+    }
+  }
+}

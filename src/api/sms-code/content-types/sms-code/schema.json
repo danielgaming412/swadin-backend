@@ -21,12 +21,6 @@
     },
     "expires_at": {
       "type": "datetime"
-    },
-    "prospect": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::prospect.prospect",
-      "inversedBy": "sms_code"
     }
   }
 }

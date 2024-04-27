@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "prospect_complementaires",
+  "info": {
+    "singularName": "prospect-complementaire",
+    "pluralName": "prospect-complementaires",
+    "displayName": "prospectComplementaire",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "prospect": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::prospect.prospect"
+    },
+    "complementaire": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::complementaire.complementaire"
+    },
+    "souhait": {
+      "type": "string"
+    }
+  }
+}

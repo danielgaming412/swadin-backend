@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -17,12 +17,6 @@
     },
     "phone": {
       "type": "string"
-    },
-    "sms_code": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::sms-code.sms-code",
-      "mappedBy": "prospect"
     },
     "form_info": {
       "type": "json",
@@ -40,6 +34,23 @@
     "score": {
       "type": "integer",
       "default": 0
+    },
+    "numeroValide": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    },
+    "specifique_med_alt": {
+      "type": "json"
+    },
+    "specifique_abo_sport": {
+      "type": "json"
+    },
+    "specifique_hospit": {
+      "type": "json"
+    },
+    "specifique_protec_jur": {
+      "type": "json"
     }
   }
 }

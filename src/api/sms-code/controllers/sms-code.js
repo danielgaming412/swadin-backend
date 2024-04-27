@@ -8,65 +8,81 @@ const { createCoreController } = require('@strapi/strapi').factories;
 module.exports = createCoreController('api::sms-code.sms-code');
 
 module.exports = {
+    
+    /**
+     * Generates a validation code, saves it in the database along with its expiration time,
+     * and sends the code to the provided phone number. It also creates a new prospect record
+     * in the database with the provided information.
+     *
+     * @param {object} ctx - The context object containing the request body.
+     * @returns {object} - A success response object with the message and prospect ID.
+     * @throws {Error} - If phone number or verification code is missing.
+     */
     async create(ctx) {
-        const code = Math.floor(Math.random() * 9000 + 1000);
-        const { phone, validation_code, email, form_info, prime_actuelle, family_name, family_members_count } = ctx.request.body;
-        if (!phone) {
-            return ctx.badRequest('Numéro de téléphone requis');
-        }
-        // console.log("phonecontroller", phone)
-        // Calculate the expiration time (e.g., 15 minutes from now)
-        const expiresIn = 15 * 60 * 1000; // 15 minutes in milliseconds
-        const expiresAt = new Date(Date.now() + expiresIn);
+      const code = Math.floor(Math.random() * 9000 + 1000);
+      const {
+        phone,
+        validation_code,
+        email,
+        form_info,
+        prime_actuelle,
+        family_name,
+        family_members_count,
+        specifique_med_alt,
+        specifique_abo_sport,
+        specifique_hospit,
+        specifique_protec_jur
+      } = ctx.request.body;
 
-        // Save the code and its expiration time in your database
-        const verificationData = {
-            phone,
-            validation_code: code,
-            expires_at: expiresAt,
-        };
+      if (!phone) {
+        throw new Error('Numéro de téléphone requis');
+      }
 
-        const existingVerification = await strapi.entityService.findMany("api::sms-code.sms-code",
-            {
-                filters: { phone: phone },
-                limit: 1,
-                populate: { propspect: true },
-            });
+      const expiresIn = 15 * 60 * 1000; // 15 minutes in milliseconds
+      const expiresAt = new Date(Date.now() + expiresIn);
 
-        //  console.log(existingVerification)
+      const verificationData = {
+        phone,
+        validation_code: code,
+        expires_at: expiresAt,
+      };
 
-        if (existingVerification && existingVerification.length > 0) {
-            // Update the existing record with the new code and expiration time
-            const entity = existingVerification[0]
-            //   console.log("entity", entity);
-            // console.log(verificationData)
-            await strapi.entityService.update("api::sms-code.sms-code", entity.id, { data: verificationData });
-            //  console.log("updated")
-        } else {
-            // Create a new record if it doesn't exist with the verificationData
-            await strapi.service("api::sms-code.sms-code").create(verificationData);
-            // console.log("created");
-        }
+      const existingVerification = await strapi.entityService.findMany("api::sms-code.sms-code", {
+        filters: { phone },
+        limit: 1,
+        populate: { propspect: true },
+      });
 
-        if (!phone || !code) {
-            return ctx.badRequest('Phone number and verification code are required');
-        }
+      if (existingVerification.length > 0) {
+        const entity = existingVerification[0];
+        await strapi.entityService.update("api::sms-code.sms-code", entity.id, { data: verificationData });
+      } else {
+        await strapi.service("api::sms-code.sms-code").create(verificationData);
+      }
 
-        // Send the validation code
-        strapi.service("api::sms-code.sms").sendValidationCode(phone, code);
+      if (!phone || !code) {
+        throw new Error('Phone number and verification code are required');
+      }
 
-        const prospect = await strapi.entityService.create("api::prospect.prospect", {
-            data: {
-                form_info: form_info || {},
-                prime_actuelle: prime_actuelle || [],
-                email: email || "non renseigné",
-                phone: phone,
-                family_name: family_name || "non renseigné",
-                family_members_count: family_members_count,
-            },
-        });
-        return ctx.send({ message: `${code} available for 15min only`, prospect: prospect.id });
-    }, 
+      strapi.service("api::sms-code.sms").sendValidationCode(phone, code);
+
+      const prospect = await strapi.entityService.create("api::prospect.prospect", {
+        data: {
+          form_info: form_info || {},
+          prime_actuelle: prime_actuelle || [],
+          email: email || "non renseigné",
+          phone,
+          family_name: family_name || "non renseigné",
+          family_members_count,
+          specifique_med_alt,
+          specifique_abo_sport,
+          specifique_hospit,
+          specifique_protec_jur
+        },
+      });
+
+      return { message: `${code} available for 15min only`, prospect: prospect.id };
+    },
 
     async get(ctx) {
         return await strapi
@@ -101,13 +117,14 @@ module.exports = {
             const entity  = await strapi.entityService.findOne("api::prospect.prospect", prospect_id);
             console.log("prospect_id", prospect_id)
             console.log("entity", entity);
-            const updateScore = await strapi.entityService.update("api::prospect.prospect", prospect_id, {
+            const updateNumeroValieEtScore = await strapi.entityService.update("api::prospect.prospect", prospect_id, {
                 data: {
                     score: entity.score + 1,
+                    numeroValide : true
                 },
             });
 
-            console.log("updateScore", updateScore);
+            console.log("updateScore", updateNumeroValieEtScore);
             // Mark the user as verified in your database
             // Create prospect in the database TODO
             // await strapi.entityService.u("api::prospect.prospect", {
