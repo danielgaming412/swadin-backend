@@ -51,6 +51,16 @@
     },
     "specifique_protec_jur": {
       "type": "json"
+    },
+    "complementaire": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::complementaire.complementaire"
+    },
+    "primesCh2024": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::primes-ch-2024.primes-ch-2024"
     }
   }
 }
