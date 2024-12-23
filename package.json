@@ -1,7 +1,7 @@
 {
   "name": "swadin-backend",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A Strapi application",
   "scripts": {
     "develop": "strapi develop",
@@ -17,16 +17,18 @@
   },
   "dependencies": {
     "@faker-js/faker": "^8.0.2",
-    "@strapi/plugin-i18n":"4.13.6",
-    "@strapi/plugin-users-permissions": "4.13.6",
-    "@strapi/strapi": "4.13.6",
+    "@strapi/plugin-users-permissions": "5.6.0",
+    "@strapi/strapi": "5.6.0",
     "async": "^3.2.4",
-    "better-sqlite3": "7.4.6",
+    "better-sqlite3": "11.3.0",
     "mod-aspsms": "^2.0.1",
     "pg": "^8.9.0",
     "pg-connection-string": "^2.5.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^6.0.0",
     "request": "^2.88.2",
-    "strapi-plugin-import-export-entries": "^1.19.1"
+    "styled-components": "^6.0.0"
   },
   "author": {
     "name": "Daniel Gaming"

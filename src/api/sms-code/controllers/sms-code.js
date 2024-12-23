@@ -47,7 +47,7 @@ module.exports = {
         expires_at: expiresAt,
       };
 
-      const existingVerification = await strapi.entityService.findMany("api::sms-code.sms-code", {
+      const existingVerification = await strapi.documents("api::sms-code.sms-code").findMany({
         filters: { phone },
         limit: 1,
         populate: { propspect: true },
@@ -55,7 +55,10 @@ module.exports = {
 
       if (existingVerification.length > 0) {
         const entity = existingVerification[0];
-        await strapi.entityService.update("api::sms-code.sms-code", entity.id, { data: verificationData });
+        await strapi.documents("api::sms-code.sms-code").update({
+          documentId: "__TODO__",
+          data: verificationData
+        });
       } else {
         await strapi.service("api::sms-code.sms-code").create(verificationData);
       }
@@ -66,7 +69,7 @@ module.exports = {
 
       strapi.service("api::sms-code.sms").sendValidationCode(phone, code);
 
-      const prospect = await strapi.entityService.create("api::prospect.prospect", {
+      const prospect = await strapi.documents("api::prospect.prospect").create({
         data: {
           form_info: form_info || {},
           prime_actuelle: prime_actuelle || [],
@@ -94,7 +97,7 @@ module.exports = {
     async verify(ctx) {
         const { phone, validation_code, prospect_id } = ctx.request.body;
         // Fetch the stored code and expiration time from the database
-        const existingVerification = await strapi.entityService.findMany("api::sms-code.sms-code", {
+        const existingVerification = await strapi.documents("api::sms-code.sms-code").findMany({
             filters: { phone: phone },
             limit: 1,
             populate: { prospect: true },
@@ -114,14 +117,18 @@ module.exports = {
 
         // Compare the submitted code with the stored code and check if it's expired
         if (isCodeCorrect && !isCodeExpired) {
-            const entity  = await strapi.entityService.findOne("api::prospect.prospect", prospect_id);
+            const entity  = await strapi.documents("api::prospect.prospect").findOne({
+              documentId: "__TODO__"
+            });
             console.log("prospect_id", prospect_id)
             console.log("entity", entity);
-            const updateNumeroValieEtScore = await strapi.entityService.update("api::prospect.prospect", prospect_id, {
-                data: {
-                    score: entity.score + 1,
-                    numeroValide : true
-                },
+            const updateNumeroValieEtScore = await strapi.documents("api::prospect.prospect").update({
+              documentId: "__TODO__",
+
+              data: {
+                  score: entity.score + 1,
+                  numeroValide : true
+              }
             });
 
             console.log("updateScore", updateNumeroValieEtScore);

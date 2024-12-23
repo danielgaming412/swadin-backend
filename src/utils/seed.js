@@ -39,15 +39,17 @@ const { faker } = require("@faker-js/faker");
 // }
 
 async function bulkPublish() {
-  const items = await strapi.entityService.findMany("api::prime-ch.prime-ch", { publishedAt: null });
+  const items = await strapi.documents("api::prime-ch.prime-ch").findMany({ publishedAt: null });
 
   const updateItem = async (item) => {
     try {
       console.log("publishing item ", `${items.indexOf(item)}/${items.length}`);
-      await strapi.entityService.update("api::prime-ch.prime-ch", item.id, {
+      await strapi.documents("api::prime-ch.prime-ch").update({
+        documentId: "__TODO__",
+
         data: {
           publishedAt: new Date().toISOString()
-        },
+        }
       });
     } catch (err) {
       console.error("Error updating item:", err);
@@ -76,7 +78,9 @@ async function deleteBulk() {
   try { 
     const promises = items.map(item => {
       console.log("deleting item ", item.id);
-      return strapi.entityService.delete("api::primes-ch-2024.primes-ch-2024", item.id);
+      return strapi.documents("api::primes-ch-2024.primes-ch-2024").delete({
+        documentId: "__TODO__"
+      });
     });
     await Promise.all(promises);
   } catch (err) {
@@ -123,7 +127,7 @@ async function seedFormAnalyticCollection() {
   };
 
   for (let i = 0; i < numberOfRecordsToCreate; i++) {
-    await strapi.entityService.create("api::form-analytic.form-analytic", {
+    await strapi.documents("api::form-analytic.form-analytic").create({
       data: {
         step_number: faker.datatype.number({ min: 1, max: 5 }),
         step_name: faker.helpers.enumValue(STEPSNAME),
