@@ -23,11 +23,26 @@
       "target": "api::article.article",
       "inversedBy": "categories"
     },
-    "produit": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::produit.produit",
-      "inversedBy": "categories"
+    "iconName": {
+      "type": "enumeration",
+      "enum": [
+        "Emploi",
+        "Finance",
+        "Impots",
+        "Retraite",
+        "Tourisme",
+        "Logement",
+        "Transport",
+        "Sante",
+        "Formation",
+        "Loisirs"
+      ],
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     }
   }
 }

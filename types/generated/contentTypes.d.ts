@@ -386,46 +386,91 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
+    astuces: Schema.Attribute.Relation<'oneToMany', 'api::astuce.astuce'>;
+    author: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     categories: Schema.Attribute.Relation<
       'oneToMany',
       'api::categorie.categorie'
     >;
-    content: Schema.Attribute.RichText &
+    cover: Schema.Attribute.Media<'images' | 'files'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    firstContent: Schema.Attribute.Blocks &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    isSelection: Schema.Attribute.Boolean &
       Schema.Attribute.Required &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
         };
       }> &
-      Schema.Attribute.DefaultTo<'This is the default content'>;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+      Schema.Attribute.DefaultTo<false>;
+    isTopArticle: Schema.Attribute.Boolean &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<false>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::article.article'
     >;
-    main_pic_url: Schema.Attribute.String &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    picture_url_1: Schema.Attribute.String &
-      Schema.Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    pictures: Schema.Attribute.JSON &
+    publishDate: Schema.Attribute.DateTime &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: false;
         };
       }>;
     publishedAt: Schema.Attribute.DateTime;
-    short_description: Schema.Attribute.String &
+    readTime: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.SetMinMax<
+        {
+          min: 1;
+        },
+        number
+      > &
+      Schema.Attribute.DefaultTo<5>;
+    secondContent: Schema.Attribute.Blocks &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    selectionRank: Schema.Attribute.Integer &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    shortDescription: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    slug: Schema.Attribute.UID<'titre'> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
           localized: true;
@@ -439,6 +484,20 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
         };
       }> &
       Schema.Attribute.DefaultTo<'This is the default title'>;
+    topArticleRank: Schema.Attribute.Integer &
+      Schema.Attribute.Unique &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }> &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 10;
+          min: 1;
+        },
+        number
+      >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -483,6 +542,61 @@ export interface ApiAssuranceAssurance extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAstuceAstuce extends Struct.CollectionTypeSchema {
+  collectionName: 'astuces';
+  info: {
+    description: '';
+    displayName: 'Astuce';
+    pluralName: 'astuces';
+    singularName: 'astuce';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    callToAction: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<'Je d\u00E9couvre !'>;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    image: Schema.Attribute.Media<'images'> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::astuce.astuce'>;
+    publishedAt: Schema.Attribute.DateTime;
+    titre: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }> &
+      Schema.Attribute.DefaultTo<'Les bonnes astuces !'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiCategorieCategorie extends Struct.CollectionTypeSchema {
   collectionName: 'categories';
   info: {
@@ -498,13 +612,32 @@ export interface ApiCategorieCategorie extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    iconName: Schema.Attribute.Enumeration<
+      [
+        'Emploi',
+        'Finance',
+        'Impots',
+        'Retraite',
+        'Tourisme',
+        'Logement',
+        'Transport',
+        'Sante',
+        'Formation',
+        'Loisirs',
+      ]
+    > &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::categorie.categorie'
     > &
       Schema.Attribute.Private;
-    produit: Schema.Attribute.Relation<'manyToOne', 'api::produit.produit'>;
     publishedAt: Schema.Attribute.DateTime;
     titre: Schema.Attribute.String &
       Schema.Attribute.Required &
@@ -785,47 +918,6 @@ export interface ApiPrimesCh2024PrimesCh2024
           localized: true;
         };
       }>;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface ApiProduitProduit extends Struct.CollectionTypeSchema {
-  collectionName: 'produits';
-  info: {
-    description: '';
-    displayName: 'Produit';
-    pluralName: 'produits';
-    singularName: 'produit';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    categories: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::categorie.categorie'
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    description: Schema.Attribute.RichText;
-    id_form: Schema.Attribute.String;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::produit.produit'
-    > &
-      Schema.Attribute.Private;
-    product_image_url: Schema.Attribute.String & Schema.Attribute.Required;
-    publishedAt: Schema.Attribute.DateTime;
-    short_description: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Votre contrat au meilleur prix !'>;
-    titre: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Titre par d\u00E9faut'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1494,12 +1586,12 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::article.article': ApiArticleArticle;
       'api::assurance.assurance': ApiAssuranceAssurance;
+      'api::astuce.astuce': ApiAstuceAstuce;
       'api::categorie.categorie': ApiCategorieCategorie;
       'api::complementaire.complementaire': ApiComplementaireComplementaire;
       'api::form-analytic.form-analytic': ApiFormAnalyticFormAnalytic;
       'api::prime-ch.prime-ch': ApiPrimeChPrimeCh;
       'api::primes-ch-2024.primes-ch-2024': ApiPrimesCh2024PrimesCh2024;
-      'api::produit.produit': ApiProduitProduit;
       'api::prospect-base.prospect-base': ApiProspectBaseProspectBase;
       'api::prospect-complementaire.prospect-complementaire': ApiProspectComplementaireProspectComplementaire;
       'api::prospect.prospect': ApiProspectProspect;
